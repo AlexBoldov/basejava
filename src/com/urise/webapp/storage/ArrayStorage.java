@@ -8,7 +8,7 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private final Resume[] storage = new Resume[10000];
+    private final Resume[] storage = new Resume[10_000];
     private int size;
 
     public void clear() {
@@ -17,30 +17,40 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (searchIndex(resume.getUuid()) != -1) {
-            storage[searchIndex(resume.getUuid())] = resume;
+        int uuidIndex = getIndexByUuid(resume.getUuid());
+        if (uuidIndex != -1) {
+            storage[uuidIndex] = resume;
+        } else {
+            System.out.println("ERROR: Operation fail. Resume not found");
         }
     }
 
     public void save(Resume resume) {
-        if (!isStorageFull() && isUuidUnique(resume.getUuid())) {
+        if (!isStorageFull() && getIndexByUuid(resume.getUuid()) == -1) {
             storage[size] = resume;
             size++;
+        } else {
+            System.out.println("ERROR: Operation fail. Resume already exists");
         }
     }
 
     public Resume get(String uuid) {
-        if (searchIndex(uuid) != -1) {
-            return storage[searchIndex(uuid)];
+        int uuidIndex = getIndexByUuid(uuid);
+        if (uuidIndex != -1) {
+            return storage[uuidIndex];
         }
+        System.out.println("ERROR: Operation fail. Resume not found");
         return null;
     }
 
     public void delete(String uuid) {
-        if (searchIndex(uuid) != -1) {
-            storage[searchIndex(uuid)] = storage[size - 1];
+        int uuidIndex = getIndexByUuid(uuid);
+        if (uuidIndex != -1) {
+            storage[uuidIndex] = storage[size - 1];
             storage[size - 1] = null;
             size--;
+        } else {
+            System.out.println("ERROR: Operation fail. Resume not found");
         }
     }
 
@@ -55,26 +65,15 @@ public class ArrayStorage {
         return size;
     }
 
-    private int searchIndex(String uuid) {
+    private int getIndexByUuid(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) return i;
         }
-        System.out.println("ERROR: Operation fail. Resume not found");
         return -1;
     }
 
-    private boolean isUuidUnique(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                System.out.println("ERROR: Operation fail. Resume already exists");
-                return false;
-            }
-        }
-        return true;
-    }
-
     private boolean isStorageFull() {
-        if (storage.length != size) return false;
+        if (size < storage.length) return false;
         System.out.println("ERROR: Operation fail. No storage space");
         return true;
     }
