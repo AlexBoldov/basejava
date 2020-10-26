@@ -7,8 +7,9 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private final Resume[] storage = new Resume[10_000];
+public class ArrayStorage extends AbstractArrayStorage {
+    private static final int STORAGE_LIMIT = 10_000;
+    private final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size;
 
     public void clear() {
@@ -17,11 +18,11 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        int uuidIndex = getIndexByUuid(resume.getUuid());
-        if (uuidIndex != -1) {
-            storage[uuidIndex] = resume;
+        int resumeIndex = getIndexByUuid(resume.getUuid());
+        if (resumeIndex != -1) {
+            storage[resumeIndex] = resume;
         } else {
-            System.out.println("ERROR: Operation fail. Resume not found");
+            System.out.println("ERROR: Operation fail. Resume " + resume.getUuid() + " not found");
         }
     }
 
@@ -30,27 +31,18 @@ public class ArrayStorage {
             storage[size] = resume;
             size++;
         } else {
-            System.out.println("ERROR: Operation fail. Resume already exists");
+            System.out.println("ERROR: Operation fail. Resume " + resume.getUuid() + " already exists");
         }
-    }
-
-    public Resume get(String uuid) {
-        int uuidIndex = getIndexByUuid(uuid);
-        if (uuidIndex != -1) {
-            return storage[uuidIndex];
-        }
-        System.out.println("ERROR: Operation fail. Resume not found");
-        return null;
     }
 
     public void delete(String uuid) {
-        int uuidIndex = getIndexByUuid(uuid);
-        if (uuidIndex != -1) {
-            storage[uuidIndex] = storage[size - 1];
+        int resumeIndex = getIndexByUuid(uuid);
+        if (resumeIndex != -1) {
+            storage[resumeIndex] = storage[size - 1];
             storage[size - 1] = null;
             size--;
         } else {
-            System.out.println("ERROR: Operation fail. Resume not found");
+            System.out.println("ERROR: Operation fail. Resume " + uuid + " not found");
         }
     }
 
@@ -61,19 +53,15 @@ public class ArrayStorage {
         return Arrays.copyOf(storage, size);
     }
 
-    public int size() {
-        return size;
-    }
-
-    private int getIndexByUuid(String uuid) {
+    protected int getIndexByUuid(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) return i;
+            if (uuid.equals(storage[i].getUuid())) return i;
         }
         return -1;
     }
 
     private boolean isStorageFull() {
-        if (size < storage.length) return false;
+        if (size < STORAGE_LIMIT) return false;
         System.out.println("ERROR: Operation fail. No storage space");
         return true;
     }
