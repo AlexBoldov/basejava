@@ -25,12 +25,9 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         int resumeIndex = getIndexByUuid(uuid);
         if (resumeIndex < 0) {
             System.out.println("ERROR: Operation fail. Resume " + uuid + " not found");
-        } else if (size == STORAGE_LIMIT) {
+        } else {
             System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, size - 1 - resumeIndex);
             storage[size - 1] = null;
-            size--;
-        } else {
-            System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, size - resumeIndex);
             size--;
         }
     }
