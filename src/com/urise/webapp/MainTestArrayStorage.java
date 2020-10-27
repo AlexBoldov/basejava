@@ -1,15 +1,15 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.ArrayStorage;
+import com.urise.webapp.storage.SortedArrayStorage;
 import com.urise.webapp.storage.Storage;
 
 /**
  * Test for your com.urise.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    private final static Storage ARRAY_STORAGE = new ArrayStorage();
-//  private final static Storage ARRAY_STORAGE = new SortedArrayStorage();
+//  private final static Storage ARRAY_STORAGE = new ArrayStorage();
+    private final static Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
         final Resume r1 = new Resume();
@@ -20,6 +20,8 @@ public class MainTestArrayStorage {
         r3.setUuid("uuid3");
         final Resume r4 = new Resume();
         r4.setUuid("uuid3");
+        final Resume r5 = new Resume();
+        r5.setUuid("uuid1");
 
         System.out.println("Save r1 ...");
         ARRAY_STORAGE.save(r1);
@@ -32,6 +34,7 @@ public class MainTestArrayStorage {
 
         System.out.println("Get r1 ...");
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
+        
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
         System.out.println("Get dummy ...");
@@ -55,8 +58,15 @@ public class MainTestArrayStorage {
         printAll();
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
+        System.out.println("Save r5 ...");
+        ARRAY_STORAGE.save(r5);
+
+        printAll();
+        System.out.println("Size: " + ARRAY_STORAGE.size());
+
         System.out.println("Clear ...");
         ARRAY_STORAGE.clear();
+
         printAll();
         System.out.println("Size: " + ARRAY_STORAGE.size());
     }
