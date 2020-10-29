@@ -1,5 +1,8 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -20,7 +23,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(Resume resume) {
         int resumeIndex = getIndexByUuid(resume.getUuid());
         if (resumeIndex < 0) {
-            System.out.println("ERROR: Operation fail. Resume " + resume.getUuid() + " not found");
+            throw new NotExistStorageException(resume.getUuid());
         } else {
             storage[resumeIndex] = resume;
         }
@@ -29,29 +32,27 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume resume) {
         int resumeIndex = getIndexByUuid(resume.getUuid());
         if (size == STORAGE_LIMIT) {
-            System.out.println("ERROR: Operation fail. No storage space");
+            throw new StorageException("ERROR: Operation fail. No storage space", resume.getUuid());
         } else if (resumeIndex < 0) {
             saveResume(resume, resumeIndex);
             size++;
         } else {
-            System.out.println("ERROR: Operation fail. Resume " + resume.getUuid() + " already exists");
+            throw new ExistStorageException(resume.getUuid());
         }
     }
 
     public Resume get(String uuid) {
         int resumeIndex = getIndexByUuid(uuid);
         if (resumeIndex < 0) {
-            System.out.println("ERROR: Operation fail. Resume " + uuid + " not found");
-            return null;
-        } else {
-            return storage[resumeIndex];
+            throw new NotExistStorageException(uuid);
         }
+        return storage[resumeIndex];
     }
 
     public void delete(String uuid) {
         int resumeIndex = getIndexByUuid(uuid);
         if (resumeIndex < 0) {
-            System.out.println("ERROR: Operation fail. Resume " + uuid + " not found");
+            throw new NotExistStorageException(uuid);
         } else {
             deleteResume(resumeIndex);
             storage[size - 1] = null;
