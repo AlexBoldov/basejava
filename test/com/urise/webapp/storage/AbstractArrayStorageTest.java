@@ -17,7 +17,7 @@ public abstract class AbstractArrayStorageTest {
     Resume resume_3 = new Resume("uuid_3");
     Resume resume_4 = new Resume();
 
-    protected AbstractArrayStorageTest(Storage storage) {
+    AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
 
@@ -41,9 +41,9 @@ public abstract class AbstractArrayStorageTest {
         Assert.assertSame(resume_1, storage.get(resume_1.getUuid()));
     }
 
-    @Test (expected = NotExistStorageException.class)
+    @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(new Resume());
+        storage.update(resume_4);
     }
 
     @Test
@@ -54,7 +54,7 @@ public abstract class AbstractArrayStorageTest {
         Assert.assertEquals(resume_4, storage.get(resume_4.getUuid()));
     }
 
-    @Test (expected = ExistStorageException.class)
+    @Test(expected = ExistStorageException.class)
     public void saveExist() {
         storage.save(resume_1);
     }
@@ -84,28 +84,26 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void getAll() {
-        Resume[] resumes = storage.getAll();
-        Assert.assertEquals(resumes.length, storage.size());
-        Assert.assertEquals(resume_1, resumes[0]);
-        Assert.assertEquals(resume_2, resumes[1]);
-        Assert.assertEquals(resume_3, resumes[2]);
+        Resume[] expectedResumes = storage.getAll();
+        Resume[] actualResumes = {resume_1, resume_2, resume_3};
+        Assert.assertEquals(expectedResumes.length, actualResumes.length);
+        Assert.assertArrayEquals(expectedResumes, actualResumes);
     }
 
     @Test
     public void size() {
-            Assert.assertEquals(3, storage.size());
+        Assert.assertEquals(3, storage.size());
     }
 
-    @Test (expected = StorageException.class)
+    @Test(expected = StorageException.class)
     public void overflowStorage() {
         try {
             for (int i = storage.size(); i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
-            Assert.fail();
+            Assert.fail("ERROR: Incorrect method work - saveResume()");
         }
-        System.out.println(storage.size());
         storage.save(new Resume());
     }
 }
