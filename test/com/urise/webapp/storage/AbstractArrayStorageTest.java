@@ -19,7 +19,7 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
-            fail("ERROR: Incorrect method work - saveResumeArray()");
+            fail("ERROR: Incorrect method work - saveToStorage()");
         }
         storage.save(new Resume());
     }

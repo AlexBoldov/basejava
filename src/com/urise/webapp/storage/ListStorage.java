@@ -19,8 +19,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void saveResume(Resume resume, int resumeIndex) {
-        int transformIndex = Math.abs(resumeIndex) - 1;
-        storage.add(transformIndex, resume);
+        storage.add(resume);
     }
 
     @Override
@@ -43,8 +42,10 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected int getIndexByUuid(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return Collections.binarySearch(storage, searchKey);
+        for (int i = 0; i < storage.size(); i++) {
+            if (uuid.equals(storage.get(i).getUuid())) return i;
+        }
+        return -1;
     }
 
 }

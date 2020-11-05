@@ -29,10 +29,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("ERROR: Operation fail. No storage space", resume.getUuid());
         } else {
-            saveResumeArray(resume, resumeIndex);
+            saveToStorage(resume, resumeIndex);
             size++;
         }
     }
+
+    protected abstract void saveToStorage(Resume resume, int resumeIndex);
 
     @Override
     protected Resume getResume(int resumeIndex) {
@@ -41,10 +43,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected void deleteResume(int resumeIndex) {
-        deleteResumeArray(resumeIndex);
+        deleteFromStorage(resumeIndex);
         storage[size - 1] = null;
         size--;
     }
+
+    protected abstract void deleteFromStorage(int resumeIndex);
 
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
@@ -53,8 +57,4 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public int size() {
         return size;
     }
-
-    protected abstract void saveResumeArray(Resume resume, int resumeIndex);
-
-    protected abstract void deleteResumeArray(int resumeIndex);
 }
