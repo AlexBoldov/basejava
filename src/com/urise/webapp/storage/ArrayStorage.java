@@ -6,6 +6,7 @@ import com.urise.webapp.model.Resume;
  * Array based storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
+
     @Override
     protected int getIndexByUuid(String uuid) {
         for (int i = 0; i < size; i++) {
@@ -15,12 +16,12 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void saveResume(Resume resume, int resumeIndex) {
+    protected void saveResumeArray(Resume resume, int resumeIndex) {
         storage[size] = resume;
     }
 
     @Override
-    protected void deleteResume(int resumeIndex) {
+    protected void deleteResumeArray(int resumeIndex) {
         storage[resumeIndex] = storage[size - 1];
     }
 }

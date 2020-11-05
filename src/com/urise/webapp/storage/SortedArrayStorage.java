@@ -5,6 +5,7 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
+
     @Override
     protected int getIndexByUuid(String uuid) {
         Resume searchKey = new Resume(uuid);
@@ -12,14 +13,14 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void saveResume(Resume resume, int resumeIndex) {
+    protected void saveResumeArray(Resume resume, int resumeIndex) {
         resumeIndex = Math.abs(resumeIndex) - 1;
         System.arraycopy(storage, resumeIndex, storage, resumeIndex + 1, size - resumeIndex);
         storage[resumeIndex] = resume;
     }
 
     @Override
-    protected void deleteResume(int resumeIndex) {
+    protected void deleteResumeArray(int resumeIndex) {
         System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, size - 1 - resumeIndex);
     }
 }
