@@ -2,38 +2,39 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-public class ListStorage extends AbstractStorage {
+public class MapStorage extends AbstractStorage {
 
-    private final List<Resume> storage = new ArrayList<>();
+    Map<String, Resume> storage = new HashMap<>();
 
     public void clear() {
         storage.clear();
     }
 
     @Override
-    public void updateResume(Resume resume, Object resumeIndex) {
-        storage.set((int) resumeIndex, resume);
+    protected void updateResume(Resume resume, Object resumeIndex) {
+        storage.put(resume.getUuid(), resume);
     }
 
     @Override
     protected void saveResume(Resume resume, Object resumeIndex) {
-        storage.add(resume);
+        storage.put(resume.getUuid(), resume);
     }
 
     @Override
     protected Resume getResume(Object resumeIndex) {
-        return storage.get((int) resumeIndex);
+        return storage.get(resumeIndex);
     }
 
     @Override
     protected void deleteResume(Object resumeIndex) {
-        storage.remove((int) resumeIndex);
+        storage.remove(resumeIndex);
     }
 
     public Resume[] getAll() {
-        return storage.toArray(new Resume[0]);
+        return storage.values().toArray(new Resume[0]);
     }
 
     public int size() {
@@ -43,14 +44,13 @@ public class ListStorage extends AbstractStorage {
     @Override
     protected Object getIndexByUuid(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
-            if (uuid.equals(storage.get(i).getUuid())) return i;
+            if (storage.containsKey(uuid)) return uuid;
         }
-        return -1;
+        return null;
     }
 
     @Override
     protected boolean isResumeExist(Object resumeIndex) {
-        return (int) resumeIndex >= 0;
+        return resumeIndex != null;
     }
-
 }
