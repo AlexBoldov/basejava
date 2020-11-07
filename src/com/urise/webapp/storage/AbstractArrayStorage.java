@@ -20,16 +20,16 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateResume(Resume resume, Object resumeIndex) {
-        storage[(int) resumeIndex] = resume;
+    protected void updateResume(Resume resume, Object searchKey) {
+        storage[(int) searchKey] = resume;
     }
 
     @Override
-    protected void saveResume(Resume resume, Object resumeIndex) {
+    protected void saveResume(Resume resume, Object searchKey) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("ERROR: Operation fail. No storage space", resume.getUuid());
         } else {
-            saveToStorage(resume, (int) resumeIndex);
+            saveToStorage(resume, (int) searchKey);
             size++;
         }
     }
@@ -37,13 +37,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected abstract void saveToStorage(Resume resume, int resumeIndex);
 
     @Override
-    protected Resume getResume(Object resumeIndex) {
-        return storage[(int) resumeIndex];
+    protected Resume getResume(Object searchKey) {
+        return storage[(int) searchKey];
     }
 
     @Override
-    protected void deleteResume(Object resumeIndex) {
-        deleteFromStorage((int) resumeIndex);
+    protected void deleteResume(Object searchKey) {
+        deleteFromStorage((int) searchKey);
         storage[size - 1] = null;
         size--;
     }
@@ -59,7 +59,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isResumeExist(Object resumeIndex) {
-        return (int) resumeIndex >= 0;
+    protected boolean isResumeExist(Object searchKey) {
+        return (int) searchKey >= 0;
     }
 }
