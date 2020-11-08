@@ -20,6 +20,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
+    public int size() {
+        return size;
+    }
+
     @Override
     protected void updateResume(Resume resume, Object searchKey) {
         storage[(int) searchKey] = resume;
@@ -54,10 +58,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     protected List<Resume> copyStorageToList() {
         return Arrays.asList(Arrays.copyOf(storage, size));
-    }
-
-    public int size() {
-        return size;
     }
 
     @Override

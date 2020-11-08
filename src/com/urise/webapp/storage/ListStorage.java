@@ -12,6 +12,10 @@ public class ListStorage extends AbstractStorage {
         storage.clear();
     }
 
+    public int size() {
+        return storage.size();
+    }
+
     @Override
     public void updateResume(Resume resume, Object searchKey) {
         storage.set((int) searchKey, resume);
@@ -35,10 +39,6 @@ public class ListStorage extends AbstractStorage {
     @Override
     protected List<Resume> copyStorageToList() {
         return storage;
-    }
-
-    public int size() {
-        return storage.size();
     }
 
     @Override

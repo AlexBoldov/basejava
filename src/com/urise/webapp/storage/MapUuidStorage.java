@@ -12,6 +12,10 @@ public class MapUuidStorage extends AbstractStorage {
         storage.clear();
     }
 
+    public int size() {
+        return storage.size();
+    }
+
     @Override
     protected void updateResume(Resume resume, Object searchKey) {
         storage.put((String) searchKey, resume);
@@ -35,10 +39,6 @@ public class MapUuidStorage extends AbstractStorage {
     @Override
     protected List<Resume> copyStorageToList() {
         return new ArrayList<>(storage.values());
-    }
-
-    public int size() {
-        return storage.size();
     }
 
     @Override
