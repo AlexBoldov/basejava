@@ -1,7 +1,7 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.MapStorage;
+import com.urise.webapp.storage.MapResumeStorage;
 import com.urise.webapp.storage.Storage;
 
 /**
@@ -11,14 +11,15 @@ public class MainTestArrayStorage {
     //  private final static Storage ARRAY_STORAGE = new ArrayStorage();
     //  private final static Storage ARRAY_STORAGE = new SortedArrayStorage();
     //  private final static Storage ARRAY_STORAGE = new ListStorage();
-    private final static Storage ARRAY_STORAGE = new MapStorage();
+    //  private final static Storage ARRAY_STORAGE = new MapUuidStorage();
+    private final static Storage ARRAY_STORAGE = new MapResumeStorage();
 
     public static void main(String[] args) {
-        final Resume r1 = new Resume("uuid1");
-        final Resume r2 = new Resume("uuid2");
-        final Resume r3 = new Resume("uuid3");
+        final Resume r1 = new Resume("uuid1", "user2");
+        final Resume r2 = new Resume("uuid2", "user2");
+        final Resume r3 = new Resume("uuid3", "user2");
 //      final Resume r4 = new Resume("uuid3");
-        final Resume r5 = new Resume("uuid1");
+        final Resume r5 = new Resume("uuid1", "user3");
 
         System.out.println("Save r1 ...");
         ARRAY_STORAGE.save(r1);
@@ -71,7 +72,7 @@ public class MainTestArrayStorage {
 
     static void printAll() {
         System.out.println("\nGet All");
-        for (Resume r : ARRAY_STORAGE.getAll()) {
+        for (Resume r : ARRAY_STORAGE.getAllSorted()) {
             System.out.println(r);
         }
     }

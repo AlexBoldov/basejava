@@ -4,37 +4,37 @@ import com.urise.webapp.model.Resume;
 
 import java.util.*;
 
-public class ListStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage {
 
-    private final List<Resume> storage = new ArrayList<>();
+    private final Map<String, Resume> storage = new HashMap<>();
 
     public void clear() {
         storage.clear();
     }
 
     @Override
-    public void updateResume(Resume resume, Object searchKey) {
-        storage.set((int) searchKey, resume);
+    protected void updateResume(Resume resume, Object searchKey) {
+        storage.put(resume.getUuid(), resume);
     }
 
     @Override
     protected void saveResume(Resume resume, Object searchKey) {
-        storage.add(resume);
+        storage.put(resume.getUuid(), resume);
     }
 
     @Override
     protected Resume getResume(Object searchKey) {
-        return storage.get((int) searchKey);
+        return (Resume) searchKey;
     }
 
     @Override
     protected void deleteResume(Object searchKey) {
-        storage.remove((int) searchKey);
+        storage.remove(((Resume) searchKey).getUuid());
     }
 
     @Override
     protected List<Resume> copyStorageToList() {
-        return storage;
+        return new ArrayList<>(storage.values());
     }
 
     public int size() {
@@ -42,16 +42,12 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
-        for (int i = 0; i < storage.size(); i++) {
-            if (uuid.equals(storage.get(i).getUuid())) return i;
-        }
-        return -1;
+    protected Resume getSearchKey(String uuid) {
+        return storage.get(uuid);
     }
 
     @Override
     protected boolean isResumeExist(Object searchKey) {
-        return (int) searchKey >= 0;
+        return searchKey != null;
     }
-
 }
