@@ -1,10 +1,12 @@
 package com.urise.webapp.model;
 
-public class TextSection extends Section {
+import java.util.List;
 
-    private final String content;
+public class OrganizationSection extends Section {
 
-    public TextSection(String content) {
+    private final List<Experience> content;
+
+    public OrganizationSection(List<Experience> content) {
         this.content = content;
     }
 
@@ -13,7 +15,7 @@ public class TextSection extends Section {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TextSection that = (TextSection) o;
+        OrganizationSection that = (OrganizationSection) o;
 
         return content.equals(that.content);
     }
@@ -25,6 +27,6 @@ public class TextSection extends Section {
 
     @Override
     public String toString() {
-        return " '" + content + '\'';
+        return " " + content;
     }
 }

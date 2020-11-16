@@ -2,11 +2,11 @@ package com.urise.webapp.model;
 
 import java.util.List;
 
-public class TextSectionList extends Section {
+public class BulletedListSection extends Section {
 
     private final List<String> content;
 
-    public TextSectionList(List<String> content) {
+    public BulletedListSection(List<String> content) {
         this.content = content;
     }
 
@@ -15,7 +15,7 @@ public class TextSectionList extends Section {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TextSectionList that = (TextSectionList) o;
+        BulletedListSection that = (BulletedListSection) o;
 
         return content.equals(that.content);
     }
