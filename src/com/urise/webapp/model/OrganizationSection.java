@@ -1,12 +1,14 @@
 package com.urise.webapp.model;
 
 import java.util.List;
+import java.util.Objects;
 
-public class OrganizationSection extends Section {
+public class OrganizationSection extends AbstractSection {
 
     private final List<Experience> content;
 
     public OrganizationSection(List<Experience> content) {
+        Objects.requireNonNull(content, "OrganizationSection.content must not be null");
         this.content = content;
     }
 

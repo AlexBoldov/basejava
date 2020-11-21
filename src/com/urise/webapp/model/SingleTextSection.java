@@ -1,10 +1,13 @@
 package com.urise.webapp.model;
 
-public class SingleTextSection extends Section {
+import java.util.Objects;
+
+public class SingleTextSection extends AbstractSection {
 
     private final String content;
 
     public SingleTextSection(String content) {
+        Objects.requireNonNull(content, "SingleTextSection.content must not be null");
         this.content = content;
     }
 
