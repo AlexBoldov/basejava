@@ -16,7 +16,7 @@ public class MainFile {
             throw new RuntimeException("ERROR", e);
         }
 
-        File dir = new File("C:/basejava");
+        File dir = new File("/basejava");
         System.out.println(dir.isDirectory());
         String[] list = dir.list();
         if (list != null) {
@@ -41,7 +41,7 @@ public class MainFile {
         if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
-                    System.out.println(file.getName() + " from dir " + file.getParent());
+                    System.out.println(file.getName());
                 } else scanProjectFiles(file);
             }
         }

@@ -2,12 +2,10 @@ package com.urise.webapp.model;
 
 import java.util.*;
 
-/**
- * Initial resume class
- */
 public class Resume implements Comparable<Resume> {
 
-    private final String uuid;      // Unique identifier
+    // Unique identifier
+    private final String uuid;
     private final String fullName;
 
     private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);

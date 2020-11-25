@@ -6,9 +6,6 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Array based storage for Resumes
- */
 public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     protected static final int STORAGE_LIMIT = 10_000;
@@ -33,10 +30,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected void saveResume(Resume resume, Integer searchKey) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("ERROR: Operation fail. No storage space", resume.getUuid());
-        } else {
-            saveToStorage(resume, searchKey);
-            size++;
         }
+        saveToStorage(resume, searchKey);
+        size++;
     }
 
     protected abstract void saveToStorage(Resume resume, int resumeIndex);

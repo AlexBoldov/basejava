@@ -5,9 +5,9 @@ import java.util.Objects;
 
 public class OrganizationSection extends AbstractSection {
 
-    private final List<Experience> content;
+    private final List<Organization> content;
 
-    public OrganizationSection(List<Experience> content) {
+    public OrganizationSection(List<Organization> content) {
         Objects.requireNonNull(content, "OrganizationSection.content must not be null");
         this.content = content;
     }

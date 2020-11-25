@@ -4,14 +4,14 @@ import java.time.YearMonth;
 import java.util.List;
 import java.util.Objects;
 
-public class Experience {
+public class Organization {
 
     private final Link homePage;
-    private final List<Attributes> attributes;
+    private final List<Experience> experience;
 
-    public Experience(String orgName, String url, List<Attributes> attributes) {
+    public Organization(String orgName, String url, List<Experience> experience) {
         this.homePage = new Link(orgName, url);
-        this.attributes = attributes;
+        this.experience = experience;
     }
 
     @Override
@@ -19,34 +19,34 @@ public class Experience {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Experience that = (Experience) o;
+        Organization that = (Organization) o;
 
         if (!homePage.equals(that.homePage)) return false;
-        return Objects.equals(attributes, that.attributes);
+        return Objects.equals(experience, that.experience);
     }
 
     @Override
     public int hashCode() {
         int result = homePage.hashCode();
-        result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
+        result = 31 * result + (experience != null ? experience.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "\n\t\t\t{" + homePage + " ," + attributes + '}';
+        return "\n\t\t\t{" + homePage + " ," + experience + '}';
     }
 
-    public static class Attributes {
+    public static class Experience {
 
         private final YearMonth beginDate;
         private final YearMonth endDate;
         private final String title;
         private final String desc;
 
-        public Attributes(YearMonth beginDate, YearMonth endDate, String title, String desc) {
-            Objects.requireNonNull(beginDate, "Attributes.beginDate must not be null");
-            Objects.requireNonNull(beginDate, "Attributes.title must not be null");
+        public Experience(YearMonth beginDate, YearMonth endDate, String title, String desc) {
+            Objects.requireNonNull(beginDate, "Experience.beginDate must not be null");
+            Objects.requireNonNull(title, "Experience.title must not be null");
             this.beginDate = beginDate;
             this.endDate = endDate;
             this.title = title;
@@ -58,7 +58,7 @@ public class Experience {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
-            Attributes that = (Attributes) o;
+            Experience that = (Experience) o;
 
             if (!beginDate.equals(that.beginDate)) return false;
             if (!Objects.equals(endDate, that.endDate)) return false;
